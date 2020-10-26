@@ -1,0 +1,132 @@
+.wall {
+  width: calc(45%);
+  height: auto;
+  border: 2px solid orange;
+}
+
+.wall__form {
+  padding: 0 30px;
+}
+
+.wall__title {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.wall__apply {
+  width: 100%;
+}
+
+.bricks {
+  width: calc(45%);
+  height: auto;
+  border: 2px solid orange;
+  padding: 0 30px;
+}
+
+.bricks__title {
+  margin: 20px 0;
+}
+
+.brick__delete {
+  width: 26px;
+  background-color: orange;
+  border: 0;
+  color: white;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.fd-row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.fd-column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.jc-sa {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.jc-sb {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrap {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  font-size: 2em;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 400;
+}
+
+.subtitle {
+  font-size: 1.5em;
+  font-family: monospace;
+  margin: 0 0 5px;
+}
+
+.button {
+  border: 0;
+  background-color: orange;
+  padding: 10px 0;
+  margin: 10px 0;
+  color: white;
+}
+
+.button__calculate {
+  width: calc(100% - 40px);
+}
+
+.input {
+  width: 50px;
+  height: 20px;
+}
+
+.table {
+  width: 90%;
+  height: auto;
+  margin: 10px 5%;
+  padding: 10px;
+  border: 2px solid orange;
+}
+
+.table__elem {
+  height: 20px;
+  width: auto;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.table__elem--active {
+  background-color: orange;
+}
+
+.answer {
+  width: 100%;
+  color: orange;
+  text-align: center;
+  font-size: 3em;
+}

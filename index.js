@@ -1,31 +1,38 @@
 const toArray = (str) => str.split(' ');
-const matrixContain = (matrix, value) => matrix.every(el => el.every(elem => +elem == +value));      //checks whether matrix contains value
-const arrayContain = (matrix, value) => matrix.every(el => +el == +value);      //checks whether array contains value
+const isZeroMatrix = (matrix) => matrix.every(el => el.every(elem => !elem));
+const arrayContain = (matrix, value) => matrix.every(el => +el == +value);
+const getElementById = id => document.getElementById(id);
+const getValueById = id => getElementById(id).value;
 
-function Wall(width, height, matrix) {      //class wall
+let targetMatrix = [];
+
+function Wall(width, height, matrix) {
     this.height = height;
     this.width = width;
     this.matrix = matrix;
 
-    this.buildWall = brick => {     //method for checking the possibility of building a wall
+    this.buildWall = brick => {
         let brickCounter = 1;
 
         for (let wallRow = 0; wallRow < this.height; wallRow++) {
             for (let wallColumn = 0; wallColumn < this.width; wallColumn++) {
-
                 if ((wallRow + brick.height) <= this.height && (wallColumn + brick.width) <= this.width && this.matrix[wallRow][wallColumn] == 1 && brickCounter <= brick.amount) {
                     let part = [];
-                    for (let i = wallRow; i < (+wallRow + +brick.height); i++) {
+                    for (let i = wallRow; i < (+wallRow + +brick.height); ++i) {
                         for (let j = wallColumn; j < (+wallColumn + +brick.width); j++) {
-                            part.push(this.matrix[i][j]);
+                            if (i<this.height && j< this.width) {
+                                part.push(this.matrix[i][j]);
+                            }
                         }
                     }
-
                     if (arrayContain(part, 1)) {
                         brickCounter++;
                         for (let i = wallRow; i < (+wallRow + +brick.height); i++) {
                             for (let j = wallColumn; j < (+wallColumn + +brick.width); j++) {
-                                this.matrix[i][j] = 0;
+                                if (i<this.height && j< this.width) {
+                                    this.matrix[i][j] = 0;
+                                }
+                                
                             }
                         }
                     }
@@ -34,45 +41,88 @@ function Wall(width, height, matrix) {      //class wall
         }
 
     };
-    this.makeInt = () => {
-        for (let i = 0; i < this.height; i++) {
-            for (let j = 0; j < this.width; j++) {
-                this.matrix[i][j] = parseInt(this.matrix[i][j]);
-            }
-        }
-    };
 }
 
-function Brick(height, width, amount) {     //class brick
+function Brick(height, width, amount) {
     this.height = height;
     this.width = width;
     this.amount = amount;
 }
 
-let matrix = [];
-let size = toArray(prompt("Enter matrix size:"));
-for (let i = 0; i < size[1]; i++) {
-    matrix[i] = toArray(prompt(`Enter matrix row № ${i + 1}:`));
+let brick = [new Brick(1, 1, 1)];
+
+drawBricks();
+let wallColumns;
+let wallRows;
+function generateWall() {
+    targetMatrix = [];
+    wallColumns = getValueById('wallColumnsAmount');
+    wallRows = getValueById('wallRowsAmount');
+    let table = ``;
+    for (let j = 0; j < wallRows; j++) {
+        targetMatrix.push([]);
+        table += `<tr class="table__row"> \n`;
+        for (let i = 0; i < wallColumns; i++) {
+            targetMatrix[j][i] = 0;
+            table += `<td class="table__elem" onclick="setActiveElement(${j}, ${i})" id="${j}-${i}"></td>`
+        }
+        table += `</tr>`;
+    }
+    getElementById('matrix').innerHTML = table;
 }
 
-let wall = new Wall(+size[0], +size[1], matrix);
-wall.makeInt();
-let amountOfBricks = prompt("Enter amount of bricks:")
-let brick = [];
-for (let i = 0; i < amountOfBricks; i++) {
-    let brickStats = toArray(prompt(`Brick №${i + 1} stats`));
-    brick[i] = new Brick(+brickStats[0], +brickStats[1], +brickStats[2]);       //initialize a new brick with parameters
+function setActiveElement(row, col) {
+    const id = row + "-" + col;
+    const classList = getElementById(id).classList;
+    if (Array.from(classList).includes("table__elem--active")) {
+        classList.remove("table__elem--active")
+        targetMatrix[row][col] = 0;
+    }
+    else {
+        classList.add('table__elem--active')
+        targetMatrix[row][col] = 1;
+    }
 }
 
-brick = brick.sort((a, b) => {       //sort bricks by square
-    if (a.height * a.width < b.height * b.width) return 1;
-    if (a.height * a.width == b.height * b.width) return 0;
-    if (a.height * a.width > b.height * b.width) return -1;
-});
-
-for (let i = 0; i < amountOfBricks; i++) {
-    wall.buildWall(brick[i]);               //transfer bricks to the method
+function drawBricks() {
+    const bricksTemplate = brick.map((elem, i) => {
+        return `<div class="brick flex fd-row jc-sb">
+        <p class="brick__subtitle subtitle">Width:</p>
+        <input id="width${i}" value="${elem.width}" type="number" class="brick__input input" onchange="changeBrickParam('width',${i})">
+        <p class="brick__subtitle subtitle">Height:</p>
+        <input id="height${i}" value="${elem.height}" type="number" class="brick__input input"  onchange="changeBrickParam('height',${i})">
+        <p class="brick__subtitle subtitle">Amount:</p>
+        <input id="amount${i}"  value="${elem.amount}" type="number" class="brick__input input"  onchange="changeBrickParam('amount',${i})">
+        <button class="brick__delete" onclick="deleteBrick(${i})"><i class="fa fa-times"></i></button>
+        </div>`;
+    }).join('');
+    getElementById('bricksField').innerHTML = bricksTemplate;
+}
+function addBrick() {
+    brick.push(new Brick(1, 1, 1));
+    drawBricks();
 }
 
-console.log(wall.matrix);
-matrixContain(wall.matrix, 0) ? console.log('yes') : console.log('no')     //check whether all elements of the matrix are zero
+function changeBrickParam(param, index) {
+    const id = param + index;
+    const value = getValueById(id);
+    brick[index][param] = value;
+}
+
+function deleteBrick(index) {
+    brick.splice(index, 1);
+    drawBricks();
+}
+function checkBuild() {
+    const targetWall = JSON.parse(JSON.stringify(targetMatrix));
+    const wall = new Wall(wallColumns, wallRows, targetWall);
+    const sortedBricks = JSON.parse(JSON.stringify(brick)).sort((a, b) => {
+        if (a.height * a.width < b.height * b.width) return 1;
+        if (a.height * a.width == b.height * b.width) return 0;
+        if (a.height * a.width > b.height * b.width) return -1;
+    });
+    sortedBricks.forEach(elem => {
+        wall.buildWall(elem);
+    })
+    isZeroMatrix(wall.matrix) ? alert('YES') : alert('NO');
+}
