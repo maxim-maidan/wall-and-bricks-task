@@ -1,0 +1,107 @@
+.wall {
+    width: calc(45%);
+    height: auto;
+    border: 2px solid orange;
+
+    &__form {
+        padding: 0 30px;
+    }
+    &__title {
+        width: 100%;
+        margin: 20px 0;
+    }
+    &__apply {
+        width: 100%;
+    }
+}
+
+.bricks {
+    width: calc(45%);
+    height: auto;
+    border: 2px solid orange;
+    padding: 0 30px;
+
+    &__title {
+        margin: 20px 0;
+    }
+}
+.brick {
+    &__delete {
+        width: 26px;
+        background-color: orange;
+        border: 0;
+        color: white;
+    }
+}
+
+.flex {
+    display: flex;
+}
+.fd-row {
+    flex-direction: row;
+}
+.fd-column {
+    flex-direction: column;
+}
+.jc-sa {
+    justify-content: space-around;
+}
+.jc-sb {
+    justify-content: space-between;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.full {
+    width: 100%;
+    height: 100%;
+}
+.title {
+    font-size: 2em;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    font-weight: 400;
+}
+.subtitle {
+    font-size: 1.5em;
+    font-family: monospace;
+    margin: 0 0 5px;
+}
+.button {
+    border: 0;
+    background-color: orange;
+    padding: 10px 0;
+    margin: 10px 0;
+    color: white;
+
+    &__calculate {
+        width: calc(100% - 40px);
+    }
+}
+.input {
+    width: 50px;
+    height: 20px;
+}
+.table {
+    width: 90%;
+    height: auto;
+    margin: 10px 5%;
+    padding: 10px;
+
+    border: 2px solid orange;
+    &__elem {
+        height: 20px;
+        width: auto;
+        border: 1px solid black;
+        text-align: center;
+
+        &--active {
+            background-color: orange;
+        }
+    }
+}
+.answer {
+    width: 100%;
+    color: orange;
+    text-align: center;
+    font-size: 3em;
+}

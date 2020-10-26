@@ -4,11 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/d6e76c230a.css">
     <link rel="stylesheet" href="css/index.css">
+
     <title>Wall and Bricks Task</title>
 </head>
 
 <body>
+    <div class="full flex fd-row jc-sa wrap">
+        <div class="wall">
+            <div class="wall__form flex fd-row jc-sb wrap">
+                <p class="wall__title title">Enter matrix size:</p>
+                <p class="wall__subtitle subtitle">Rows:</p>
+                <input type="number" id="wallRowsAmount" class="wall__input input" value="1">
+                <p class="wall__subtitle subtitle">Columns:</p>
+                <input type="number" id="wallColumnsAmount" class="wall__input input" value="1">
+                <button class="wall__apply subtitle button" onclick="generateWall()">Apply</button>
+            </div>
+            <table class="table" id="matrix">
+                <tr class="table__row">
+                    <td class="table__elem">Wall is not created.</td>
+                </tr>
+            </table>
+        </div>
+        <div class="bricks flex fd-column">
+            <p class="bricks__title title">Bricks:</p>
+            <div id="bricksField">
+
+            </div>
+            <button class="bricks__add button subtitle" onclick="addBrick()">Add</button>
+        </div>
+        <p class="answer subtitle"> </p>
+        <button class="button button__calculate title" onclick="checkBuild()">Calculate</button>
+    </div>
     <script src="index.js"></script>
 </body>
+
 </html>
